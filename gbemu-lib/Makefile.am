@@ -2,14 +2,17 @@ lib_LTLIBRARIES = \
 	libgbemu.la
 
 libgbemu_la_SOURCES = \
-	@srcdir@/src/gbemu.cpp
+	$(top_srcdir)/gbemu-lib/src/gbemu.cpp
+
+include_HEADERS = \
+	$(top_srcdir)/gbemu-lib/include/gbemu/gbemu.h
 
 libgbemu_la_LDFLAGS = \
 	-no-undefined \
-	-version-info @LTVER@
+	-version-info $(LTVER)
 
 libgbemu_la_CPPFLAGS = \
-	-I@srcdir@/include/
+	-I$(top_srcdir)/gbemu-lib/include
 
 libgbemu_la_CXXFLAGS = \
 	-Wall

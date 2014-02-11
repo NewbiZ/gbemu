@@ -2,13 +2,13 @@ bin_PROGRAMS = \
 	gbemu-as
 
 gbemu_as_SOURCES = \
-	@srcdir@/src/gbemu-as.cpp
+	$(top_srcdir)/gbemu-as/src/gbemu-as.cpp
 
 gbemu_as_LDADD = \
-	@top_srcdir@/gbemu-lib/libgbemu.la
+	$(top_builddir)/gbemu-lib/libgbemu.la
 
 gbemu_as_CPPFLAGS = \
-	-I@top_srcdir@/gbemu-lib/include
+	-I$(top_srcdir)/gbemu-lib/include
 
 gbemu_as_CXXFLAGS = \
 	-Wall
