@@ -1,9 +1,11 @@
-#ifndef GBEMU
-#define GBEMU
+#ifndef GBEMU_H
+#define GBEMU_H
 
 #include <string>
 
-namespace gbemu {
+#define GBEMU_VERSION_MAJOR 1
+#define GBEMU_VERSION_MINOR 0
+#define GBEMU_VERSION_PATCH 0
 
 #define GBEMU_CARTRIDGE_TYPES        \
     X(ROM_ONLY,                0x00) \
@@ -35,6 +37,10 @@ namespace gbemu {
     X(BANDAI_TAMA5,            0xFD) \
     X(HUC3,                    0xFE) \
     X(HUC1_RAM_BATTERY,        0xFF)
+
+namespace gbemu {
+
+const std::string& version();
 
 class Cartridge
 {
@@ -155,5 +161,5 @@ private:
 
 } // namespace gbemu
 
-#endif // GBEMU
+#endif // GBEMU_H
 

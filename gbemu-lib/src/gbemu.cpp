@@ -1,3 +1,5 @@
+#include <gbemu/gbemu.h>
+
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
@@ -5,7 +7,8 @@
 #include <fstream>
 #include <sstream>
 
-#include <gbemu/gbemu.h>
+#define STR(x) #x
+#define XSTR(x) STR(x)
 
 #ifdef NDEBUG
 #  define TRACE(X)
@@ -14,6 +17,15 @@
 #endif // NDEBUG
 
 namespace gbemu {
+
+const std::string& version()
+{
+
+    static const std::string v = XSTR(GBEMU_VERSION_MAJOR) "." \
+                                 XSTR(GBEMU_VERSION_MINOR) "." \
+                                 XSTR(GBEMU_VERSION_PATCH);
+    return v;
+}
 
 std::string bytesToHuman(std::size_t size)
 {
@@ -276,23 +288,4 @@ void VirtualMemory::dump(std::ostream& stream) const
 }
 
 } // namespace gbemu
-
-int main(int argc, char** argv)
-{
-    if (argc!=2)
-    {
-        std::cerr << "usage: ./gbemu <cartridge_file>" << std::endl;
-        return EXIT_FAILURE;
-    }
-
-    gbemu::Cartridge cart(argv[1]);
-    gbemu::GameBoy gameboy;
-
-    gameboy.insert(cart);
-    gameboy.powerOn();
-    gameboy.powerOff();
-    gameboy.eject();
-    
-    return EXIT_SUCCESS;
-}
 
