@@ -5,7 +5,11 @@ libgbemu_la_SOURCES = \
 	$(top_srcdir)/gbemu-lib/src/gbemu.cpp
 
 pkginclude_HEADERS = \
-	$(top_srcdir)/gbemu-lib/include/gbemu/gbemu.h
+	$(top_srcdir)/gbemu-lib/include/gbemu/gbemu.h \
+	$(top_srcdir)/gbemu-lib/include/gbemu/gameboy.h \
+	$(top_srcdir)/gbemu-lib/include/gbemu/mmu.h \
+	$(top_srcdir)/gbemu-lib/include/gbemu/cpu.h \
+	$(top_srcdir)/gbemu-lib/include/gbemu/cartridge.h
 
 libgbemu_la_LDFLAGS = \
 	-no-undefined \

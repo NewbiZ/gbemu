@@ -1,4 +1,8 @@
 #include <gbemu/gbemu.h>
+#include <gbemu/gameboy.h>
+#include <gbemu/cpu.h>
+#include <gbemu/mmu.h>
+#include <gbemu/cartridge.h>
 
 #include <iostream>
 #include <cstdlib>
@@ -227,12 +231,12 @@ void GameBoy::powerOn()
 {
     TRACE("> Powering ON GameBoy...");
     cpu.powerOn();
-    virtualMemory.powerOn();
+    mmu.powerOn();
 }
 
 void GameBoy::powerOff()
 {
-    virtualMemory.powerOff();
+    mmu.powerOff();
     cpu.powerOff();
     TRACE("< Powering OFF GameBoy...");
 }
@@ -262,28 +266,28 @@ void CPU::dump(std::ostream& stream) const
 {
 }
 
-// ========== VirtualMemory ==========
-VirtualMemory::VirtualMemory()
+// ========== MMU ==========
+MMU::MMU()
 {
 }
 
-VirtualMemory::~VirtualMemory()
+MMU::~MMU()
 {
 }
 
-void VirtualMemory::powerOn()
+void MMU::powerOn()
 {
-    TRACE("> Powering ON virtual memory...");
+    TRACE("> Powering ON mmu...");
     // Zero out all RAM on startup
     std::memset(memory, 0, sizeof(memory));
 }
 
-void VirtualMemory::powerOff()
+void MMU::powerOff()
 {
-    TRACE("< Powering OFF virtual memory...");
+    TRACE("< Powering OFF mmu...");
 }
 
-void VirtualMemory::dump(std::ostream& stream) const
+void MMU::dump(std::ostream& stream) const
 {
 }
 

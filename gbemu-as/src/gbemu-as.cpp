@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #include <gbemu/gbemu.h>
+#include <gbemu/cartridge.h>
 
 int main( int argc, char** argv )
 {
@@ -15,12 +16,7 @@ int main( int argc, char** argv )
     }
 
     gbemu::Cartridge cart(argv[1]);
-    gbemu::GameBoy gameboy;
-
-    gameboy.insert(cart);
-    gameboy.powerOn();
-    gameboy.powerOff();
-    gameboy.eject();
+    cart.dump(std::cout);
     
     return EXIT_SUCCESS;
 }
