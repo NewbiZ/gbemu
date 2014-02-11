@@ -16,6 +16,6 @@ AM_PROG_CC_C_O
 
 AC_CONFIG_FILES(Makefile \
                 gbemu-lib/Makefile \
-                gbemu-as/Makefile
+                gbemu-as/Makefile )
 
 AC_OUTPUT

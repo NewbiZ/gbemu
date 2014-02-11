@@ -2,14 +2,16 @@ bin_PROGRAMS = \
 	gbemu-as
 
 gbemu_as_SOURCES = \
-	src/gbemu-as.cpp
+	@srcdir@/src/gbemu-as.cpp
 
 gbemu_as_LDADD = \
-	../gbemu-lib/libgbemu.la
+	@top_srcdir@/gbemu-lib/libgbemu.la
 
-gbemu_as_CXXFLAGS = -I../gbemu-lib/include \
-	 -Wall \
-	 -pedantic
+gbemu_as_CPPFLAGS = \
+	-I@top_srcdir@/gbemu-lib/include
+
+gbemu_as_CXXFLAGS = \
+	-Wall
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

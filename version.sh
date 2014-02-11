@@ -1,5 +1,5 @@
-if [ ! -f $(dirname $0)/gbemu-lib/include/gbemu/gbemu ]; then
-    echo "version.sh: error: $(dirname $0)/gbemu-lib/include/gbemu/gbemu does not exist" 1>&2
+if [ ! -f $(dirname $0)/gbemu-lib/include/gbemu/gbemu.h ]; then
+    echo "version.sh: error: $(dirname $0)/gbemu-lib/include/gbemu/gbemu.h does not exist" 1>&2
     exit 1
 fi
 
