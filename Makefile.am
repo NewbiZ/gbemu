@@ -2,6 +2,9 @@ SUBDIRS = \
 	gbemu-lib \
 	gbemu-as
 
+EXTRA_DIST = \
+	LICENSE.txt
+
 MAINTAINERCLEANFILES = \
 	Makefile \
 	Makefile.in \

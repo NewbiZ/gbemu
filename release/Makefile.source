@@ -1,0 +1,12 @@
+source: $(CURDIR)/dist/gbemu-$(VERSION).tar.gz
+
+$(CURDIR)/../configure:
+	$(CURDIR)/../autogen.sh
+
+$(CURDIR)/dist/gbemu-$(VERSION).tar.gz: $(CURDIR)/../configure
+	mkdir -p $(CURDIR)/dist
+	$(eval $@_TMP := $(shell mktemp -d -t gbemu.XXXXX))
+	cd $($@_TMP) && $(CURDIR)/../configure --quiet
+	cd $($@_TMP) && make --quiet dist
+	cd $($@_TMP) && mv gbemu-$(VERSION).tar.gz $(CURDIR)/dist
+	rm -rf $($@_TMP)

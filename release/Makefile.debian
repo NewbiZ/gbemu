@@ -1,0 +1,84 @@
+MAINTAINER=Aurelien Vallee <vallee.aurelien@gmail.com>
+REVISION=1
+
+debian: $(CURDIR)/dist/gbemu-$(VERSION).deb
+
+$(CURDIR)/dist/gbemu-$(VERSION).deb: $(CURDIR)/dist/gbemu-$(VERSION).tar.gz
+	# Create temporary directory to create the debian package
+	$(eval $@_TMP := $(shell mktemp -d -t gbemu.XXXXX))
+	# Copy the upstream tarball
+	cp $(CURDIR)/dist/gbemu-$(VERSION).tar.gz $($@_TMP)/
+	# Rename the upstream tarball to the debian convenion
+	mv $($@_TMP)/gbemu-$(VERSION).tar.gz $($@_TMP)/gbemu_$(VERSION).orig.tar.gz
+	# Extract the upstream tarball
+	cd $($@_TMP) && tar xzf gbemu_$(VERSION).orig.tar.gz
+	# Create the debian directory inside the upstream source dir
+	mkdir -p $($@_TMP)/gbemu-$(VERSION)/debian
+	# Copy the license from the upstream source
+	cp $($@_TMP)/gbemu-$(VERSION)/LICENSE.txt $($@_TMP)/gbemu-$(VERSION)/debian/copyright
+	# Set the package compatibility level
+	echo 9 > $($@_TMP)/gbemu-$(VERSION)/debian/compat
+	# Set the source package format
+	mkdir -p $($@_TMP)/gbemu-$(VERSION)/debian/source
+	echo "3.0 (quilt)" > $($@_TMP)/gbemu-$(VERSION)/debian/source/format
+	# Add some lintian ignore rules
+	echo "package-name-doesnt-match-sonames" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/gbemu.lintian-overrides
+	echo "new-package-should-close-ipt-bug" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/gbemu.lintian-overrides
+	# Setup the rules file
+	echo "#!/usr/bin/make -f" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/rules
+	echo "%:" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/rules
+	echo "	dh \$$@" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/rules
+	chmod +x $($@_TMP)/gbemu-$(VERSION)/debian/rules
+	# Generate the control file
+	echo "Source: gbemu" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Maintainer: $(MAINTAINER)" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Section: misc" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Priority: optional" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Standards-Version: 3.9.4" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Vcs-Git: http://github.com/NewbiZ/gbemu" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Homepage: http://github.com/NewbiZ/gbemu" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Build-Depends: debhelper (>= 9)" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Package: gbemu" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Architecture: any" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Depends: \$${shlibs:Depends}, \$${misc:Depends}" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo "Description: GameBoy emulator" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	echo " GameBoy emulator, [dis]assembler, and utility tools" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/control
+	# Generate the changelog
+	echo "gbemu ($(VERSION)-$(REVISION)) UNRELEASED; urgency=low" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/changelog
+	echo "" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/changelog
+	echo "  * New upstream release." \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/changelog
+	echo "" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/changelog
+	echo " -- $(MAINTAINER)  Wed, 12 Feb 2014 12:54:18 +0200" \
+		>> $($@_TMP)/gbemu-$(VERSION)/debian/changelog
+	# Build the debian source & binary package
+	cd $($@_TMP)/gbemu-$(VERSION)/ && debuild -us -uc
+	# Backup the debian source package
+	mv $($@_TMP)/gbemu_$(VERSION)-$(REVISION).debian.tar.gz $(CURDIR)/dist/
+	# Backup the debian binary package
+	mv $($@_TMP)/gbemu_$(VERSION)-$(REVISION)_*.deb $(CURDIR)/dist/
+	# Remove the now useless temporary directory
+	rm -rf $($@_TMP)

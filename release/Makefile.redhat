@@ -1,0 +1,4 @@
+redhat: source dist/gbemu-$(VERSION).rpm
+
+dist/gbemu-$(VERSION).rpm:
+	touch dist/gbemu-$(VERSION).rpm
