@@ -1,0 +1,6 @@
+# We distribute libgbemu in the gbemu package. This is
+# intended because we also distribute binaries (e.g. gbemu-as).
+package-name-doesnt-match-sonames
+
+# Discard this nonsense, we don't use itp
+new-package-should-close-itp-bug

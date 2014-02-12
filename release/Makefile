@@ -4,6 +4,9 @@ RELEASEDIR=$(shell mktemp -d -t gbemu.XXXXX)
 all: source
 .PHONY: all
 
+clean:
+	rm -rf $(CURDIR)/dist
+
 dist/gbemu-$(VERSION).tar.gz:
 	@mkdir -p $(CURDIR)/dist
 	$(eval $@_TMP := $(shell mktemp -d -t gbemu.XXXXX))

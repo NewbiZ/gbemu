@@ -1,0 +1,14 @@
+Source: gbemu
+Maintainer: Aurelien Vallee <vallee.aurelien@gmail.com>
+Section: misc
+Priority: optional
+Standards-Version: 3.9.4
+Vcs-Git: http://github.com/NewbiZ/gbemu
+Homepage: http://github.com/NewbiZ/gbemu
+Build-Depends: debhelper (>= 9)
+
+Package: gbemu
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: GameBoy emulator
+ GameBoy emulator, [dis]assembler, and utility tools
