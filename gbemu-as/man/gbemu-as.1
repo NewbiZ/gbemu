@@ -1,48 +1,44 @@
-.TH GBEMU-AS 1 LOCAL
+.\" Manpage for gbemu-as
+.\" Contact Aurelien Vallee <vallee.aurelien@gmail.com> to correct errors or
+.\" typos.
+.TH GBEMU-AS 7 "Feb 2014" Linux
+
 .SH NAME
-
-gbemu-as - GameBoy [dis]assembler
-
-.SH EXAMPLE
+gbemu-as \- GameBoy cartridge [dis]assembler
 
 .SH SYNOPSIS
-
-.B gbemu-as [options] FILE
-
-.I option option
-
-.B ["
-
-.I -yy -zz
-
-.B ..."]
-
-.SH AVAILABILITY
-
-All UNIX flavors
+.B gbemu-as [
+.I OPTION
+.B ]...
+.I INFILE
 
 .SH DESCRIPTION
-
-gbemu-as is the [dis]assembler of the gbemu project. It
-is able to generate GameBoy ROMs from assembly file, or
-rebuild assembly files from ROM blobs.
+The gbemu-as program is able to assemble files in gbemu assembly, or
+disasemble already existing cartridges to the gbemu assembly.
 
 .SH OPTIONS
-
-There are no options, but we'll make some up.
-
-.TP 5
-
--yy
-
-is one option
-
-.TP
-
--zz
-
-is another option
+.IP "-o OUTFILE"
+Write the result to OUTFILE. Default is standard output
+.IP "-S"
+Switch to disassemble mode. Default is assemble.
 
 .SH AUTHOR
-
 Aurelien Vallee <vallee.aurelien@gmail.com>
+
+.SH COPYRIGHT
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+                   Version 2, December 2004
+
+Copyright (C) 2014 Aurelien Vallee <vallee.aurelien@gmail.com>
+
+Everyone is permitted to copy and distribute verbatim or modified
+copies of this license document, and changing it is allowed as long
+as the name is changed.
+
+           DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
+  TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
+
+ 0. You just DO WHAT THE FUCK YOU WANT TO.
+
+.SH "SEE ALSO"
+.B libgbemu (7)

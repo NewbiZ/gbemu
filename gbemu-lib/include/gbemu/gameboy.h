@@ -3,6 +3,7 @@
 
 #include <gbemu/cpu.h>
 #include <gbemu/mmu.h>
+#include <gbemu/gpu.h>
 
 namespace gbemu {
 
@@ -23,9 +24,10 @@ public: // Power management
     void powerOff();
 
 private:
-    CPU cpu;
-    MMU mmu;
-    const Cartridge* cartridge;
+    CPU cpu_;
+    MMU mmu_;
+    GPU gpu_;
+    const Cartridge* cartridge_;
 };
 
 } // namespace gbemu

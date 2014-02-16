@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <iosfwd>
 
+#include <gbemu/gbemu.h>
+
 namespace gbemu {
 
 #define GBEMU_CARTRIDGE_TYPES        \
@@ -64,6 +66,9 @@ public:
     bool isLegit() const;
     bool isHeaderChecksumValid() const;
     bool isCartridgeChecksumValid() const;
+
+public:
+    const uint8_t* data() const;
 
 public: // Debug
     void dump(std::ostream& stream) const;

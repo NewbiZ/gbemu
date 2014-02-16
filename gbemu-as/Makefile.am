@@ -1,3 +1,8 @@
+AM_CXXFLAGS = \
+	-std=c++11 \
+	-Wall \
+	-I$(top_srcdir)/gbemu-lib/include
+
 bin_PROGRAMS = \
 	gbemu-as
 
@@ -6,12 +11,6 @@ gbemu_as_SOURCES = \
 
 gbemu_as_LDADD = \
 	$(top_builddir)/gbemu-lib/libgbemu.la
-
-gbemu_as_CPPFLAGS = \
-	-I$(top_srcdir)/gbemu-lib/include
-
-gbemu_as_CXXFLAGS = \
-	-Wall
 
 MAINTAINERCLEANFILES = \
 	Makefile.in

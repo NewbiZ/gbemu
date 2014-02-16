@@ -1,9 +1,15 @@
 #ifndef GBEMU_MMU_H
 #define GBEMU_MMU_H
 
+#include <gbemu/gbemu.h>
+
 #include <iosfwd>
 
 namespace gbemu {
+
+class Cartridge;
+class GPU;
+class CPU;
 
 // 0xFFFF           Interrupt Enable Flag
 // 0xFF80 - 0xFFFE  Zero Page
@@ -25,18 +31,31 @@ namespace gbemu {
 class MMU
 {
 public:
+    static const uint8_t bios[256];
+
+public:
     MMU();
     ~MMU();
 
 public: // Power management
-    void powerOn();
+    void powerOn(const CPU& cpu, const GPU& gpu, const Cartridge& cart);
     void powerOff();
+
+public:
+    uint8_t  readByte(uint16_t address) const;
+    uint16_t readWord(uint16_t address) const;
+
+    void readByte(uint16_t address, uint8_t  value);
+    void readWord(uint16_t address, uint16_t value);
 
 public: // Debug
     void dump(std::ostream& stream) const;
 
 private:
-    unsigned char memory[0xFFFF];
+    bool isBiosMapped_;
+    unsigned char memory_[0xFFFF];
+    const Cartridge* cart_;
+    const GPU* gpu_;
 };
 
 } // namespace gbemu
