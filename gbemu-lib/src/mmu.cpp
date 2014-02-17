@@ -1,6 +1,7 @@
 #include <gbemu/mmu.h>
 
 #include <gbemu/cartridge.h>
+#include <gbemu/gpu.h>
 
 #include <cstring>
 #include <cassert>
@@ -87,7 +88,8 @@ uint8_t MMU::readByte(uint16_t address) const
     // Graphics RAM
     else if (address<0x9FFFF)
     {
-        assert(false && "error: graphics RAM not implemented");
+        //assert(false && "error: graphics RAM not implemented");
+        return gpu_->vram()[address-0x8000];
     }
     // Cartridge RAM
     else if (address<0xBFFF)
@@ -119,6 +121,7 @@ uint8_t MMU::readByte(uint16_t address) const
     {
         assert(false && "error: zero-page RAM not implemented");
     }
+    return 0;
 }
 
 uint16_t MMU::readWord(uint16_t address) const

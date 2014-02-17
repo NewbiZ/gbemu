@@ -3,11 +3,12 @@
 
 #include <gbemu/gbemu.h>
 #include <gbemu/cartridge.h>
+#include <gbemu/gpu.h>
 
 int main( int argc, char** argv )
 {
-  std::cout << "gbemu-as" << std::endl;
-  std::cout << "Using gbemu-lib " << gbemu::version() << std::endl;
+    std::cout << "gbemu-as" << std::endl;
+    std::cout << "Using gbemu-lib " << gbemu::version() << std::endl;
   
     if (argc!=2)
     {
@@ -20,3 +21,4 @@ int main( int argc, char** argv )
     
     return EXIT_SUCCESS;
 }
+

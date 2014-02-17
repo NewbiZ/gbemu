@@ -1,8 +1,3 @@
-AM_CXXFLAGS = \
-	-std=c++11 \
-	-Wall \
-	-I$(top_srcdir)/gbemu-lib/include
-
 SUBDIRS = \
 	gbemu-lib \
 	gbemu-as
