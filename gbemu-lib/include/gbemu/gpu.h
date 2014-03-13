@@ -15,8 +15,10 @@ public:
     GPU();
     GPU(const GPU& other);
     ~GPU();
+    GPU& operator=(const GPU& other);
 
 public:
+    bool isPowered() const;
     void powerOn();
     void powerOff();
 

@@ -31,7 +31,7 @@ void GameBoy::powerOn()
     assert(cartridge_ && "error: cannot start GameBoy without cartridge");
     cpu_.powerOn();
     gpu_.powerOn();
-    mmu_.powerOn(cpu_, gpu_, *cartridge_);
+    mmu_.powerOn(gpu_, *cartridge_);
 }
 
 void GameBoy::powerOff()

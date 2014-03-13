@@ -1,6 +1,7 @@
 AM_CXXFLAGS = \
 	-std=c++11 \
 	-Wall \
+	-pedantic \
 	-I$(top_srcdir)/gbemu-lib/include
 
 bin_PROGRAMS = \

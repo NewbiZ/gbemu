@@ -32,28 +32,32 @@ class MMU
 {
 public:
     static const uint8_t bios[256];
+    static const uint16_t ramSize = 0x2000;
 
 public:
     MMU();
+    MMU(const MMU& other);
     ~MMU();
+    MMU& operator=(const MMU& other);
 
 public: // Power management
-    void powerOn(const CPU& cpu, const GPU& gpu, const Cartridge& cart);
+    bool isPowered() const;
+    void powerOn(const GPU& gpu, const Cartridge& cart);
     void powerOff();
 
 public:
     uint8_t  readByte(uint16_t address) const;
     uint16_t readWord(uint16_t address) const;
 
-    void readByte(uint16_t address, uint8_t  value);
-    void readWord(uint16_t address, uint16_t value);
+    void writeByte(uint16_t address, uint8_t  value);
+    void writeWord(uint16_t address, uint16_t value);
 
 public: // Debug
     void dump(std::ostream& stream) const;
 
 private:
     bool isBiosMapped_;
-    unsigned char memory_[0xFFFF];
+    uint8_t* ram_;
     const Cartridge* cart_;
     const GPU* gpu_;
 };

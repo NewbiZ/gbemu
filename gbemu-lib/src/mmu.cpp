@@ -43,30 +43,71 @@ const uint8_t MMU::bios[] = {
     0xFB, 0x86, 0x20, 0xFE, 0x3E, 0x01, 0xE0, 0x50
 };
 
-MMU::MMU()
+MMU::MMU() :
+    ram_(0)
 {
+}
+
+MMU::MMU(const MMU& other) :
+    ram_(0)
+{
+    *this = other;
 }
 
 MMU::~MMU()
 {
 }
 
-void MMU::powerOn(const CPU& cpu, const GPU& gpu, const Cartridge& cart)
+MMU& MMU::operator=(const MMU& other)
 {
-    // Zero out all RAM on startup
-    std::memset(memory_, 0, sizeof(memory_));
-    // First 256kB of memory are initially mapped to
-    // GB BIOS. Once read, BIOS is unmapped and ROM
-    // takes its place.
-    isBiosMapped_ = true;
+    if (this==&other)
+        return *this;
+
+    if (other.isPowered())
+    {
+        if (isPowered())
+            powerOff();
+        powerOn(*other.gpu_, *other.cart_);
+        std::memcpy(ram_, other.ram_, ramSize);
+    }
+    else // !other.isPowered()
+    {
+        if (isPowered())
+            powerOff();
+    }
+
+    return *this;
+}
+
+void MMU::powerOn(const GPU& gpu, const Cartridge& cart)
+{
+    assert(!isPowered() && "error: powering ON MMU while already powered ON");
+    gpu_ = &gpu;
+    cart_ = &cart;
+    // Allocate the inner RAM
+    ram_ = new uint8_t[ramSize];
+#ifndef NDEBUG
+    // Initialize the ram to something noticeable
+    for (std::size_t i=0; i<ramSize/sizeof(uint32_t); ++i)
+        reinterpret_cast<uint32_t*>(ram_)[i] = 0xEFBEADDE;
+#endif
+}
+
+bool MMU::isPowered() const
+{
+    return ram_;
 }
 
 void MMU::powerOff()
 {
+    assert(isPowered() && "error: powering OFF MMU while not powered ON");
+    delete [] ram_;
+    ram_ = 0;
 }
 
 uint8_t MMU::readByte(uint16_t address) const
 {
+    assert(isPowered() && "error: reading from MMU while powered OFF");
     // BIOS OR BANK 0
     if (address<0x100)
     {
@@ -126,15 +167,18 @@ uint8_t MMU::readByte(uint16_t address) const
 
 uint16_t MMU::readWord(uint16_t address) const
 {
+    assert(isPowered() && "error: reading from MMU while powered OFF");
     return 0;
 }
 
-void MMU::readByte(uint16_t address, uint8_t value)
+void MMU::writeByte(uint16_t address, uint8_t value)
 {
+    assert(isPowered() && "error: writing from MMU while powered OFF");
 }
 
-void MMU::readWord(uint16_t address, uint16_t value)
+void MMU::writeWord(uint16_t address, uint16_t value)
 {
+    assert(isPowered() && "error: writing from MMU while powered OFF");
 }
 
 void MMU::dump(std::ostream& stream) const
