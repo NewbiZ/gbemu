@@ -6,10 +6,10 @@ AM_CXXFLAGS = \
 bin_PROGRAMS = \
 	gbemu-play
 
-gbemu_as_SOURCES = \
+gbemu_play_SOURCES = \
 	$(top_srcdir)/gbemu-play/src/gbemu-play.cpp
 
-gbemu_as_LDADD = \
+gbemu_play_LDADD = \
 	$(top_builddir)/gbemu-lib/libgbemu.la
 
 MAINTAINERCLEANFILES = \
