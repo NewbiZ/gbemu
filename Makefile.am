@@ -1,6 +1,7 @@
 SUBDIRS = \
 	gbemu-lib \
-	gbemu-as
+	gbemu-as  \
+	gbemu-play
 
 EXTRA_DIST = \
 	LICENSE.txt
